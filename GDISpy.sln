@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDISpyhook", "GDISpyhook\GDISpyhook.vcxproj", "{65F73B62-492C-4CE8-BD5F-E0A6D84CAE28}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GDISpy", "GDISpy\GDISpy.vcxproj", "{10709018-DD70-4BE3-BEB9-98896928C20A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{65F73B62-492C-4CE8-BD5F-E0A6D84CAE28} = {65F73B62-492C-4CE8-BD5F-E0A6D84CAE28}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

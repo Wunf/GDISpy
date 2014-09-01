@@ -7,6 +7,7 @@
 #include "GDISpyDlg.h"
 #include "afxdialogex.h"
 #include "LibInject.h"
+#include "..\GDISpyhook\GDISpyhook.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -73,6 +74,7 @@ BEGIN_MESSAGE_MAP(CGDISpyDlg, CDialogEx)
 	ON_BN_CLICKED(IDCANCEL, &CGDISpyDlg::OnBnClickedCancel)
 	ON_BN_CLICKED(IDC_BUTTON_START, &CGDISpyDlg::OnBnClickedButtonStart)
 	ON_WM_COPYDATA()
+	ON_BN_CLICKED(IDC_BUTTON_TSS, &CGDISpyDlg::OnBnClickedButtonTss)
 END_MESSAGE_MAP()
 
 
@@ -200,8 +202,8 @@ void CGDISpyDlg::OnBnClickedButtonStart()
 		MessageBox(NULL, L"Injection failed.", MB_OK);
 		return;
 	}
-	Receive();
-	SetDlgItemText(IDC_STATIC_BITMAP, m_data);
+	
+	m_processId = pi.dwProcessId;
 }
 
 
@@ -227,4 +229,16 @@ void CGDISpyDlg::Receive()
 		}
 		CloseClipboard();
 	}
+}
+
+void CGDISpyDlg::OnBnClickedButtonTss()
+{
+	if(!InjectLib(m_processId, L"..\\Debug\\GDISpyhook.dll"))
+	{
+		MessageBox(NULL, L"Injection failed.", MB_OK);
+		return;
+	}
+	fnGDISpyhook();
+	Receive();
+	SetDlgItemText(IDC_STATIC_BITMAP, m_data);
 }

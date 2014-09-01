@@ -35,8 +35,11 @@ public:
 	afx_msg BOOL OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCopyDataStruct);
 
 private:
+	DWORD m_processId;
 	LPTSTR m_data;
 	static const int max_datal = 100; 
 
 	void Receive();
+public:
+	afx_msg void OnBnClickedButtonTss();
 };

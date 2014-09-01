@@ -20,3 +20,4 @@ public:
 extern GDISPYHOOK_API int nGDISpyhook;
 
 GDISPYHOOK_API int fnGDISpyhook(void);
+GDISPYHOOK_API void Send(LPCTSTR pData);

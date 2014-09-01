@@ -13,6 +13,9 @@
 
 #include <sstream>
 #include <tchar.h>
+#include <ImageHlp.h>
+#include <StrSafe.h>
+#include <tlhelp32.h>
 
 
 // TODO: reference additional headers your program requires here

@@ -7,3 +7,4 @@ GDISpy/Release/
 GDISpyhook/Debug/
 GDISpyhook/Release/
 *.opensdf
+*.dmp
