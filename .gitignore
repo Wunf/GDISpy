@@ -1,0 +1,8 @@
+Debug/
+Release/
+ipch/
+*.sdf
+GDISpy/Debug/
+GDISpy/Release/
+GDISpyhook/Debug/
+GDISpyhook/Release/
