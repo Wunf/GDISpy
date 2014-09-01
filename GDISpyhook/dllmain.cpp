@@ -1,6 +1,8 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "stdafx.h"
 
+void Send(LPCTSTR pData);
+
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
@@ -9,15 +11,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
-		HWND hWnd = FindWindow(NULL, L"GDISpy");
-		if(!hWnd)
-			MessageBox(NULL, L"Cannot find GDISpy!", L"Error", MB_OK);
-		COPYDATASTRUCT cds;
-		cds.dwData = 1000;
-		cds.cbData = 1024;
-		cds.lpData = HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, cds.cbData);
-		memcpy(cds.lpData, "100", cds.cbData);
-		SendMessage(hWnd, WM_COPYDATA, (WPARAM)GetFocus(), (LPARAM)(&cds));
+		Send(L"100");
 		break;
 		/*case DLL_THREAD_ATTACH:
 		case DLL_THREAD_DETACH:
@@ -27,3 +21,18 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 	return TRUE;
 }
 
+void Send(LPCTSTR pData)
+{
+	if(OpenClipboard(GetFocus()))
+	{
+		HANDLE hClip;
+		LPTSTR pBuf = NULL;
+		EmptyClipboard();
+		hClip = GlobalAlloc(GMEM_MOVEABLE, (_tcslen(pData) + 1) * sizeof(TCHAR));
+		pBuf = (LPTSTR)GlobalLock(hClip);
+		_tcscpy_s(pBuf, _tcslen(pData) + 1, pData);
+		GlobalUnlock(hClip);
+		SetClipboardData(CF_TEXT, hClip);
+		CloseClipboard();
+	}
+}

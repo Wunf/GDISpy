@@ -53,6 +53,12 @@ CGDISpyDlg::CGDISpyDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CGDISpyDlg::IDD, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_data = new TCHAR[max_datal];
+}
+
+CGDISpyDlg::~CGDISpyDlg()
+{
+	delete[] m_data;
 }
 
 void CGDISpyDlg::DoDataExchange(CDataExchange* pDX)
@@ -194,12 +200,31 @@ void CGDISpyDlg::OnBnClickedButtonStart()
 		MessageBox(NULL, L"Injection failed.", MB_OK);
 		return;
 	}
+	Receive();
+	SetDlgItemText(IDC_STATIC_BITMAP, m_data);
 }
 
 
 BOOL CGDISpyDlg::OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCopyDataStruct)
 {
 	// TODO: Add your message handler code here and/or call default
-	SetDlgItemText(IDC_STATIC_BITMAP, (LPCTSTR)pCopyDataStruct->lpData);
+	/*SetDlgItemText(IDC_STATIC_BITMAP, (LPCTSTR)pCopyDataStruct->lpData);*/
 	return CDialogEx::OnCopyData(pWnd, pCopyDataStruct);
+}
+
+void CGDISpyDlg::Receive()
+{
+	if(OpenClipboard())
+	{
+		if(IsClipboardFormatAvailable(CF_TEXT))
+		{
+			HANDLE hClip;
+			LPTSTR pBuf = NULL;
+			hClip = GetClipboardData(CF_TEXT);
+			pBuf = (LPTSTR)GlobalLock(hClip);
+			_tcscpy_s(m_data, max_datal, pBuf);
+			GlobalUnlock(hClip);
+		}
+		CloseClipboard();
+	}
 }

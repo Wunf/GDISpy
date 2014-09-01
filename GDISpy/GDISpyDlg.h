@@ -11,7 +11,7 @@ class CGDISpyDlg : public CDialogEx
 // Construction
 public:
 	CGDISpyDlg(CWnd* pParent = NULL);	// standard constructor
-
+	virtual ~CGDISpyDlg();
 // Dialog Data
 	enum { IDD = IDD_GDISPY_DIALOG };
 
@@ -33,4 +33,10 @@ public:
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedButtonStart();
 	afx_msg BOOL OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCopyDataStruct);
+
+private:
+	LPTSTR m_data;
+	static const int max_datal = 100; 
+
+	void Receive();
 };
