@@ -43,6 +43,8 @@
 #include <TlHelp32.h>
 #include "Resource.h"
 #include <StrSafe.h>
+#include <sstream>
+#include <string>
 
 
 

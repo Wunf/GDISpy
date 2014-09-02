@@ -7,7 +7,7 @@
 #include "GDISpyDlg.h"
 #include "afxdialogex.h"
 #include "LibInject.h"
-#include "..\GDISpyhook\GDISpyhook.h"
+//#include "..\GDISpyhook\GDISpyhook.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -110,6 +110,7 @@ BOOL CGDISpyDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
+	//CreateCompatibleDC(*GetDC());
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -233,12 +234,14 @@ void CGDISpyDlg::Receive()
 
 void CGDISpyDlg::OnBnClickedButtonTss()
 {
-	if(!InjectLib(m_processId, L"..\\Debug\\GDISpyhook.dll"))
-	{
-		MessageBox(NULL, L"Injection failed.", MB_OK);
-		return;
-	}
-	fnGDISpyhook();
+	//fnGDISpyhook();
 	Receive();
-	SetDlgItemText(IDC_STATIC_BITMAP, m_data);
+	std::wstring a[12];
+	std::wstringstream wsstr;
+	wsstr << m_data;
+	for(int i = 0; i < 12; ++i)
+	{
+		wsstr >> a[i];
+	}
+	SetDlgItemText(IDC_STATIC_DC, a[2].c_str());
 }
