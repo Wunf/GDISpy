@@ -45,6 +45,8 @@
 #include <StrSafe.h>
 #include <sstream>
 #include <string>
+#include <set>
+#include <map>
 
 
 

@@ -8,3 +8,5 @@ GDISpyhook/Debug/
 GDISpyhook/Release/
 *.opensdf
 *.dmp
+*.dll
+*.exe

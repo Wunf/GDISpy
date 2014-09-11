@@ -36,10 +36,12 @@ public:
 
 private:
 	DWORD m_processId;
-	LPTSTR m_data;
-	static const int max_datal = 100; 
+	std::set<PVOID> m_old_table[15];
+	std::set<PVOID> m_handle_table[15];
+	int IDCUR[15], IDNEW[15], IDSAME[15], IDFREE[15];
 
 	void Receive();
 public:
 	afx_msg void OnBnClickedButtonTss();
+	afx_msg void OnBnClickedButtonCam();
 };

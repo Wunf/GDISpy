@@ -29,4 +29,6 @@ public:
 	DECLARE_MESSAGE_MAP()
 };
 
+DWORD FindProcessId(const std::wstring& processName, int index);
+
 extern CGDISpyApp theApp;

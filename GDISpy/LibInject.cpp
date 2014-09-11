@@ -118,16 +118,19 @@ BOOL WINAPI InjectLibW(DWORD dwProcessId, PCWSTR pszLibFile) {
 		// Allocate space in the remote process for the pathname
 		pszLibFileRemote = (PWSTR) 
 			VirtualAllocEx(hProcess, NULL, cb, MEM_COMMIT, PAGE_READWRITE);
-		if (pszLibFileRemote == NULL) __leave;
+		if (pszLibFileRemote == NULL) 
+			__leave;
 
 		// Copy the DLL's pathname to the remote process' address space
 		if (!WriteProcessMemory(hProcess, pszLibFileRemote, 
-			(PVOID) pszLibFile, cb, NULL)) __leave;
+			(PVOID) pszLibFile, cb, NULL)) 
+			__leave;
 
 		// Get the real address of LoadLibraryW in Kernel32.dll
 		PTHREAD_START_ROUTINE pfnThreadRtn = (PTHREAD_START_ROUTINE)
 			GetProcAddress(GetModuleHandle(TEXT("Kernel32")), "LoadLibraryW");
-		if (pfnThreadRtn == NULL) __leave;
+		if (pfnThreadRtn == NULL) 
+			__leave;
 
 		// Create a remote thread that calls LoadLibraryW(DLLPathname)
 		hThread = CreateRemoteThread(hProcess, NULL, 0, 
